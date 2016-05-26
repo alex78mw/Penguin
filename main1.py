@@ -615,3 +615,161 @@ def selectMode():
     canvas.tag_bind(mod2, '<1>', setMode2)
     canvas.tag_bind(txtmod1, '<1>', setMode1)
     canvas.tag_bind(txtmod2, '<1>', setMode2)
+
+def retry(x):
+    canvas.delete("all")
+    if x == 0:
+        canvas.create_text(500,250,text="You Loose... Seriously..? You can not play anymore... Quit ! ", tags="welcome")
+    else:
+        canvas.create_text(500,250,text="You Loose... You have to pass on all the squares... Seriously..? You can not play anymore... Quit ! ", tags="welcome")
+    print("before mod2")
+    mod2 = canvas.create_rectangle(800,500,950,600, tags="mode2", fill="blue")
+    txtmod2 = canvas.create_text(875,550,text=" Quit ", tags="mod2")
+    print("before bind")
+    canvas.tag_bind(mod2, '<1>', exit)
+    canvas.tag_bind(txtmod2, '<1>', exit)
+    print("after bind")
+    root.mainloop()
+
+def win(x):
+    canvas.delete("all")
+    if x == 0:
+        canvas.create_text(500,250,text="You Win ! Level 2 now !", tags="welcome")
+        mod1 = canvas.create_rectangle(50,500,200,600, tags="mode1", fill="blue")
+        txtmod1 = canvas.create_text(125,550,text=" Yes  ", tags="mod1")
+        canvas.tag_bind(mod1, '<1>', cleaner)
+        canvas.tag_bind(txtmod1, '<1>', cleaner)
+    elif x == 1:
+        canvas.create_text(500,250,text="You Win ! Level 3 now !", tags="welcome")
+        mod1 = canvas.create_rectangle(50,500,200,600, tags="mode1", fill="blue")
+        txtmod1 = canvas.create_text(125,550,text=" Yes  ", tags="mod1")
+        canvas.tag_bind(mod1, '<1>', cleaner)
+        canvas.tag_bind(txtmod1, '<1>', cleaner)
+    else:
+        canvas.create_text(500,250,text="You Finish the Game ! Congratulations !", tags="welcome")
+    
+    mod2 = canvas.create_rectangle(800,500,950,600, tags="mode2", fill="blue")
+    txtmod2 = canvas.create_text(875,550,text=" Quit ", tags="mod2")
+    canvas.tag_bind(mod2, '<1>', exit)
+    canvas.tag_bind(txtmod2, '<1>', exit)
+    root.mainloop()
+
+root.bind("<Left>", leftKey)
+root.bind("<Right>", rightKey)
+root.bind("<Up>", upKey)
+root.bind("<Down>", downKey)
+canvas.tag_bind(image1, '<1>', click)
+canvas.tag_bind(image2, '<1>', exit)
+
+
+def printGame():
+    global currentLvl
+    global game
+    canvas.delete(canvas.find_withtag("score"))
+    canvas.delete(canvas.find_withtag("level"))
+    canvas.delete(canvas.find_withtag("info"))
+    canvas.delete(canvas.find_withtag("info1"))
+    canvas.delete(canvas.find_withtag("info2"))
+    canvas.delete(canvas.find_withtag("legend1"))
+    canvas.delete(canvas.find_withtag("legend2"))
+    canvas.delete(canvas.find_withtag("legend3"))
+    canvas.delete(canvas.find_withtag("legend4"))
+    canvas.create_rectangle(700, 150, 750, 200, fill="green")
+    canvas.create_text(800,175,text="Penguin", tags="legend1")
+    canvas.create_rectangle(700, 200, 750, 250, fill="white")
+    canvas.create_text(800,225,text="Ice Square", tags="legend2")
+    canvas.create_rectangle(700, 250, 750, 300, fill="blue")
+    canvas.create_text(800,275,text="Water", tags="legend3")
+    canvas.create_rectangle(700, 300, 750, 350, fill="red")
+    canvas.create_text(800,325,text="Exit Square", tags="legend4")
+
+    if currentLvl == 1:
+        canvas.create_text(75,25,text="Level 1", tags="level")
+        Score = canvas.create_text(625,25,text=str(game["score"]) + " / 13", tags="score")
+    elif currentLvl == 2:
+        canvas.create_text(75,25,text="Level 2", tags="level")
+        Score = canvas.create_text(625,25,text=str(game["score"]) + " / 43", tags="score")
+    else:
+        canvas.create_text(75,25,text="Level 3", tags="level")
+        Score = canvas.create_text(625,25,text=str(game["score"]) + " / 81", tags="score")
+        canvas.delete(canvas.find_withtag("legend5"))
+        canvas.delete(canvas.find_withtag("legend6"))
+        canvas.delete(canvas.find_withtag("legend7"))
+        canvas.create_rectangle(700, 350, 750, 400, fill="gold")
+        canvas.create_text(800,375,text="Coin", tags="legend5")
+        canvas.create_rectangle(700, 400, 750, 450, fill="orange")
+        canvas.create_text(800,425,text="Hammer", tags="legend6")
+        canvas.create_rectangle(700, 450, 750, 500, fill="brown")
+        canvas.create_text(800,475,text="Tunnel", tags="legend7")
+    if playerMode == 1:
+        Info = canvas.create_text(800,75,text="You just have to finish the level", tags="info")
+    else:
+        Info1 = canvas.create_text(800,75,text="You have to pass throught all the squares", tags="info1")
+        Info2 = canvas.create_text(800,100,text="to validate the level", tags="info2")
+    
+    column = 50
+    line = 50
+    iterator = 0
+    for i in game["moves"]:
+        if column == 650:
+            line+=50
+            column = 50
+            if i == ' ':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="grey", tags=iterator)
+            elif i == 'W':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="black", tags=iterator)
+            elif i == 'C':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="gold", tags=iterator)
+            elif i == 'H':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="orange", tags=iterator)
+            elif i == 'G':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="purple", tags=iterator)
+            elif i == 'T':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="brown", tags=iterator)
+            elif i == 'O':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="white", tags=iterator)
+            elif i == 'B':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="blue", tags=iterator)
+            elif i == 'P':
+                '''photo=PhotoImage(file="pgn2.gif")
+                image0=canvas.create_image(800, 150, image=photo, tags=iterator)
+                root.mainloop()'''
+                canvas.create_rectangle(column, line, column+50, line+50, fill="green", tags=iterator)
+            elif i == 'S':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="red", tags=iterator)
+        else:
+            if i == ' ':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="grey", tags=iterator)
+            elif i == 'W':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="black", tags=iterator)
+            elif i == 'C':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="gold", tags=iterator)
+            elif i == 'H':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="orange", tags=iterator)
+            elif i == 'T':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="brown", tags=iterator)
+            elif i == 'G':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="purple", tags=iterator)
+            elif i == 'O':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="white", tags=iterator)
+            elif i == 'B':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="blue", tags=iterator)
+            elif i == 'P':
+                '''photo=PhotoImage(file="pgn2.gif")
+                image0=canvas.create_image(800, 150, image=photo, tags=iterator)
+                root.mainloop()'''
+                canvas.create_rectangle(column, line, column+50, line+50, fill="green", tags=iterator)
+            elif i == 'S':
+                canvas.create_rectangle(column, line, column+50, line+50, fill="red", tags=iterator)
+        column+=50
+        iterator+=1 
+
+
+def main():
+    init()
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
+
