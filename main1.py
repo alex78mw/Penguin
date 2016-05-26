@@ -97,6 +97,25 @@ game = {
     'moves': []
 }
 
+def init():
+    global currentLvl
+    global game
+    if currentLvl == 1:
+        game = game1
+    elif currentLvl == 2:
+        game = game2
+    else:
+        game = game3
+
+def cleaner(event):
+    init()
+    canvas.delete("mode1")
+    canvas.delete("mod1")
+    canvas.delete("mode2")
+    canvas.delete("mod2")
+    canvas.delete("result")
+    printGame()
+
 def leftKey(event):
     global currentLvl
     global playerMode
@@ -544,25 +563,6 @@ def downKey(event):
             printGame() 
         else:
             print("hammerPower : 0")
-
-def init():
-    global currentLvl
-    global game
-    if currentLvl == 1:
-        game = game1
-    elif currentLvl == 2:
-        game = game2
-    else:
-        game = game3
-
-def cleaner(event):
-    init()
-    canvas.delete("mode1")
-    canvas.delete("mod1")
-    canvas.delete("mode2")
-    canvas.delete("mod2")
-    canvas.delete("result")
-    printGame()
 
 def click(event):
     canvas.delete(canvas.find_withtag("img1"))
