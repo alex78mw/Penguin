@@ -563,3 +563,55 @@ def cleaner(event):
     canvas.delete("mod2")
     canvas.delete("result")
     printGame()
+
+def click(event):
+    canvas.delete(canvas.find_withtag("img1"))
+    canvas.delete(canvas.find_withtag("img2"))
+    canvas.delete(canvas.find_withtag("welcome"))
+    selectMode()
+
+def exit(event):
+    print("exit function")
+    root.destroy()
+    print("click sur exit")
+
+def setMode1(event):
+    global playerMode
+    playerMode = 1
+    canvas.delete(canvas.find_withtag("img0"))
+    canvas.delete(canvas.find_withtag("welcome"))
+    canvas.delete(canvas.find_withtag("info1"))
+    canvas.delete(canvas.find_withtag("info2"))
+    canvas.delete(canvas.find_withtag("mode1"))
+    canvas.delete(canvas.find_withtag("mode2"))
+    canvas.delete(canvas.find_withtag("mod1"))
+    canvas.delete(canvas.find_withtag("mod2"))
+    printGame()
+
+def setMode2(event):
+    global playerMode
+    playerMode = 2
+    #print("playerMode 2 : "+str(playerMode))
+    canvas.delete(canvas.find_withtag("img0"))
+    canvas.delete(canvas.find_withtag("welcome"))
+    canvas.delete(canvas.find_withtag("info1"))
+    canvas.delete(canvas.find_withtag("info2"))
+    canvas.delete(canvas.find_withtag("mode1"))
+    canvas.delete(canvas.find_withtag("mode2"))
+    canvas.delete(canvas.find_withtag("mod1"))
+    canvas.delete(canvas.find_withtag("mod2"))
+    printGame()
+    
+
+def selectMode():
+    canvas.create_text(500,250,text="Ok now chose your mode : ", tags="welcome")
+    canvas.create_text(500,500,text="Mode 1 : You just have to pass the level ", tags="info1")
+    canvas.create_text(500,550,text="Mode 2 : You have to pass the level by passing on all the squares ", tags="info2")
+    mod1 = canvas.create_rectangle(50,500,200,600, tags="mode1", fill="blue")
+    txtmod1 = canvas.create_text(125,550,text="Mode 1 ", tags="mod1")
+    mod2 = canvas.create_rectangle(800,500,950,600, tags="mode2", fill="blue")
+    txtmod2 = canvas.create_text(875,550,text="Mode 2 ", tags="mod2")
+    canvas.tag_bind(mod1, '<1>', setMode1)
+    canvas.tag_bind(mod2, '<1>', setMode2)
+    canvas.tag_bind(txtmod1, '<1>', setMode1)
+    canvas.tag_bind(txtmod2, '<1>', setMode2)
