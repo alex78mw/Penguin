@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter.messagebox import showinfo
-from PIL import Image, ImageTk
 
 #Global variables
 currentLvl = 1
@@ -96,6 +95,7 @@ game = {
     'enter':0,
     'exit':0,
     'moves': []
+}
 
 def leftKey(event):
     global currentLvl
@@ -319,7 +319,7 @@ def rightKey(event):
             game["hammerPower"] = 0
             printGame() 
         else:
-            print("hammerPower : 0")}
+            print("hammerPower : 0")
 
 def upKey(event):
     global currentLvl
